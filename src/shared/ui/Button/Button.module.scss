@@ -1,0 +1,34 @@
+.button {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.primary {
+  background-color: #e30d7c;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
+
+  &:hover {
+    background-color: #e30d5b;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  }
+}
+
+.ghost {
+  background-color: transparent;
+  color: #3f0c26;
+
+  &:hover {
+    color: #7c184c;
+  }
+}
+
+.search {
+  padding: 0.5rem 1rem;
+  border-radius: 0 4px 4px 0;
+  background: #b6cad5;
+  color: #1d161a;
+}
