@@ -30,7 +30,7 @@ export const ImagePicker = memo((props: ImagePickerProps) => {
             })}
           >
             <img
-              src={`http://localhost:3000/${image.path}`}
+              src={`http://localhost:8080/${image.path}`}
               alt={image.caption}
             />
           </li>

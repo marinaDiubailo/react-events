@@ -1,5 +1,5 @@
-import {memo, DetailedHTMLProps, HTMLAttributes, ReactNode} from 'react';
-import {classNames, Mods} from '@/shared/lib/classNames/classNames';
+import { memo, DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
+import { classNames, Mods } from '@/shared/lib/classNames/classNames';
 import cls from './Stack.module.scss';
 
 type FlexJustify = 'start' | 'center' | 'end' | 'between';
@@ -7,6 +7,7 @@ type FlexAlign = 'start' | 'center' | 'end';
 type FlexDirection = 'row' | 'column';
 type FlewWrap = 'nowrap' | 'wrap';
 type FlexGap = '0.5' | '1' | '1.5' | '2';
+type Padding = '0.5' | '1';
 
 type DivProps = DetailedHTMLProps<
   HTMLAttributes<HTMLDivElement>,
@@ -38,6 +39,11 @@ const gapClasses: Record<FlexGap, string> = {
   2: cls['gap-xl'],
 };
 
+const paddingClasses: Record<Padding, string> = {
+  0.5: cls['padding-sm'],
+  1: cls['padding-md'],
+};
+
 interface StackProps extends DivProps {
   className?: string;
   children?: ReactNode;
@@ -47,6 +53,7 @@ interface StackProps extends DivProps {
   gap?: FlexGap;
   wrap?: FlewWrap;
   fullHeight?: boolean;
+  padding?: Padding;
 }
 
 export const Stack = memo((props: StackProps) => {
@@ -57,6 +64,7 @@ export const Stack = memo((props: StackProps) => {
     align = 'center',
     direction = 'row',
     gap,
+    padding,
     wrap = 'nowrap',
     fullHeight,
     ...otherProps
@@ -69,6 +77,7 @@ export const Stack = memo((props: StackProps) => {
     directionClasses[direction],
     cls[wrap],
     gap && gapClasses[gap],
+    padding && paddingClasses[padding],
   ];
 
   const mods: Mods = {

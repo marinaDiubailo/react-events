@@ -1,5 +1,6 @@
 .flex {
   display: flex;
+  border: 1px solid yellow;
 }
 
 .justify-start {
@@ -64,4 +65,12 @@
 
 .full-height {
   height: 100%;
+}
+
+.padding-sm {
+  padding: 0.5rem;
+}
+
+.padding-md {
+  padding: 1rem;
 }

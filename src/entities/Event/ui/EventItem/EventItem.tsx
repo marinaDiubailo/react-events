@@ -1,10 +1,10 @@
-import {memo} from 'react';
-import {classNames} from '@/shared/lib/classNames/classNames';
-import {EventType} from '../../model/types/event';
-import {AppLink} from '@/shared/ui/AppLink';
-import {getRouteEventDetails} from '@/shared/consts/routes';
-import {Stack} from '@/shared/ui/Stack';
-import {Text} from '@/shared/ui/Text';
+import { memo } from 'react';
+import { classNames } from '@/shared/lib/classNames/classNames';
+import { EventType } from '../../model/types/event';
+import { AppLink } from '@/shared/ui/AppLink';
+import { getRouteEventDetails } from '@/shared/consts/routes';
+import { Stack } from '@/shared/ui/Stack';
+import { Text } from '@/shared/ui/Text';
 import cls from './EventItem.module.scss';
 
 interface EventItemProps {
@@ -13,7 +13,7 @@ interface EventItemProps {
 }
 
 export const EventItem = memo((props: EventItemProps) => {
-  const {className, event} = props;
+  const { className, event } = props;
 
   const formattedDate = new Date(event.date).toLocaleDateString('en-US', {
     day: 'numeric',
@@ -23,15 +23,21 @@ export const EventItem = memo((props: EventItemProps) => {
 
   return (
     <article className={classNames(cls.event, {}, [className])}>
-      <img src={`http://localhost:3000/${event.image}`} alt={event.title} />
-      <Stack fullHeight direction="column" justify="between" align="center">
-        <Stack direction="column" gap="0.5">
+      <img src={`http://localhost:8080/${event.image}`} alt={event.title} />
+      <Stack
+        fullHeight
+        direction="column"
+        justify="between"
+        align="center"
+        padding="1"
+        gap="1"
+      >
+        <Stack direction="column" gap="0.5" align="center">
           <h3>{event.title}</h3>
           <Text size="sm">{formattedDate}</Text>
           <Text>{event.location}</Text>
         </Stack>
-
-        <AppLink to={getRouteEventDetails(event.id)} className="button">
+        <AppLink to={getRouteEventDetails(event.id)} variant="primary">
           View Details
         </AppLink>
       </Stack>
