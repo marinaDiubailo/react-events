@@ -30,7 +30,7 @@ export const EventItem = memo((props: EventItemProps) => {
         justify="between"
         align="center"
         padding="1"
-        gap="1"
+        gap="2"
       >
         <Stack direction="column" gap="0.5" align="center">
           <h3>{event.title}</h3>

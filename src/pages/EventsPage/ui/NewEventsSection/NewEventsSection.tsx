@@ -1,11 +1,13 @@
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import { SectionHeading } from '@/shared/ui/SectionHeading';
 import { Loader } from '@/shared/ui/Loader/Loader';
 import { ErrorBlock } from '@/shared/ui/ErrorBlock';
-import { EventType } from '@/entities/Event/model/types/event';
 import { EventItem } from '@/entities/Event';
+import { fetchEvents } from '../../api/fetchEvents';
 import cls from './NewEventsSection.module.scss';
+import { Container } from '@/shared/ui/Container';
 
 interface NewEventsSectionProps {
   className?: string;
@@ -14,49 +16,19 @@ interface NewEventsSectionProps {
 export const NewEventsSection = memo((props: NewEventsSectionProps) => {
   const { className } = props;
 
-  const [data, setData] = useState([]);
-  const [error, setError] = useState();
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    async function fetchEvents() {
-      setIsLoading(true);
-      const response = await fetch('http://localhost:8080/events');
-
-      if (!response.ok) {
-        const error = new Error('An error occurred while fetching the events');
-        // error.code = response.status;
-        // error.info = await response.json();
-        throw error;
-      }
-
-      const { events } = await response.json();
-
-      return events;
-    }
-
-    fetchEvents()
-      .then((events) => {
-        setData(events);
-      })
-      .catch((error) => {
-        setError(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+  const { data, isPending, isError, error } = useQuery({
+    queryKey: ['events'],
+    queryFn: () => fetchEvents(),
+  });
 
   let content;
 
-  if (isLoading) {
+  if (isPending) {
     content = <Loader />;
   }
 
-  if (error) {
-    content = (
-      <ErrorBlock title="An error occurred" message="Failed to fetch events" />
-    );
+  if (isError) {
+    content = <ErrorBlock title="An error occurred" message={error.message} />;
   }
 
   if (data) {
@@ -76,8 +48,10 @@ export const NewEventsSection = memo((props: NewEventsSectionProps) => {
       className={classNames('', {}, [className])}
       id="new-events-section"
     >
-      <SectionHeading>Recently added events</SectionHeading>
-      {content}
+      <Container>
+        <SectionHeading>Recently added events</SectionHeading>
+        {content}
+      </Container>
     </section>
   );
 });

@@ -1,9 +1,9 @@
-import {memo} from 'react';
-import {classNames} from '@/shared/lib/classNames/classNames';
-import {SectionHeading} from '@/shared/ui/SectionHeading';
+import { memo } from 'react';
+import { classNames } from '@/shared/lib/classNames/classNames';
+import { SectionHeading } from '@/shared/ui/SectionHeading';
 import meetupImg from '@/shared/assets/meetup.jpg';
-import {AppLink} from '@/shared/ui/AppLink';
-import {getRouteEventCreate} from '@/shared/consts/routes';
+import { AppLink } from '@/shared/ui/AppLink';
+import { getRouteEventCreate } from '@/shared/consts/routes';
 import cls from './EventsIntroSection.module.scss';
 
 interface EventsIntroSectionProps {
@@ -11,13 +11,13 @@ interface EventsIntroSectionProps {
 }
 
 export const EventsIntroSection = memo((props: EventsIntroSectionProps) => {
-  const {className} = props;
+  const { className } = props;
 
   return (
     <section
       className={classNames(cls.overview, {}, [className])}
       id="overview-section"
-      style={{backgroundImage: `url(${meetupImg})`}}
+      style={{ backgroundImage: `url(${meetupImg})` }}
     >
       <SectionHeading variant="overview">
         Connect with amazing people <br />

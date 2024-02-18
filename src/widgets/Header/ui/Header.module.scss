@@ -1,8 +1,11 @@
 .main-header {
-  padding: 2rem 15%;
+  padding: 2rem 15px;
+  max-width: 1140px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: 3px solid red;
 
   nav {
     display: flex;
