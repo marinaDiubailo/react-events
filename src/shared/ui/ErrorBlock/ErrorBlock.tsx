@@ -5,12 +5,12 @@ import { Stack } from '../Stack';
 
 interface ErrorBlockProps {
   className?: string;
-  title: string;
+  title?: string;
   message: string;
 }
 
 export const ErrorBlock = memo((props: ErrorBlockProps) => {
-  const { className, title, message } = props;
+  const { className, title = 'An error occured', message } = props;
 
   return (
     <Stack

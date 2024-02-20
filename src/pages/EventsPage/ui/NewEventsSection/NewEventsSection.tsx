@@ -4,9 +4,8 @@ import { classNames } from '@/shared/lib/classNames/classNames';
 import { SectionHeading } from '@/shared/ui/SectionHeading';
 import { Loader } from '@/shared/ui/Loader/Loader';
 import { ErrorBlock } from '@/shared/ui/ErrorBlock';
-import { EventItem } from '@/entities/Event';
+import { EventList } from '@/entities/Event';
 import { fetchEvents } from '../../api/fetchEvents';
-import cls from './NewEventsSection.module.scss';
 import { Container } from '@/shared/ui/Container';
 
 interface NewEventsSectionProps {
@@ -18,7 +17,8 @@ export const NewEventsSection = memo((props: NewEventsSectionProps) => {
 
   const { data, isPending, isError, error } = useQuery({
     queryKey: ['events'],
-    queryFn: () => fetchEvents(),
+    queryFn: ({ signal }) => fetchEvents({ signal, searchTerm: undefined }),
+    staleTime: 5000,
   });
 
   let content;
@@ -28,19 +28,11 @@ export const NewEventsSection = memo((props: NewEventsSectionProps) => {
   }
 
   if (isError) {
-    content = <ErrorBlock title="An error occurred" message={error.message} />;
+    content = <ErrorBlock message={error.message} />;
   }
 
   if (data) {
-    content = (
-      <ul className={cls['events-list']}>
-        {data.map((event: any) => (
-          <li key={event.id}>
-            <EventItem event={event} />
-          </li>
-        ))}
-      </ul>
-    );
+    content = <EventList data={data} />;
   }
 
   return (

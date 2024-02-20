@@ -1,6 +1,4 @@
 .modal {
-  margin: 0;
-  padding: 2rem;
   position: fixed;
   top: 10vh;
   left: calc(50% - 15rem);
@@ -11,6 +9,7 @@
   border-radius: 6px;
   z-index: 100;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  padding: 2rem;
   animation: slide-down-fade-in 300ms ease-out forwards;
 }
 
@@ -31,5 +30,13 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .modal {
+    padding: 1.5rem;
+    width: 20rem;
+    left: calc(50% - 10rem);
   }
 }

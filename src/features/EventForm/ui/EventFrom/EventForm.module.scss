@@ -3,3 +3,9 @@
   flex-direction: column;
   gap: 1.5rem;
 }
+
+@media screen and (max-width: 767px) {
+  .new-event-form {
+    gap: 1rem;
+  }
+}

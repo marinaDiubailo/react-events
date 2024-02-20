@@ -1,23 +1,47 @@
-import {FormEvent, memo, useState} from 'react';
-import {classNames} from '@/shared/lib/classNames/classNames';
-import {Button} from '@/shared/ui/Button';
-import {AppLink} from '@/shared/ui/AppLink';
-import {Stack} from '@/shared/ui/Stack';
-import {Input} from '@/shared/ui/Input';
-import {Textarea} from '@/shared/ui/Textarea';
+import { FormEvent, memo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+
+import { classNames } from '@/shared/lib/classNames/classNames';
+import { Button } from '@/shared/ui/Button';
+import { AppLink } from '@/shared/ui/AppLink';
+import { Stack } from '@/shared/ui/Stack';
+import { Input } from '@/shared/ui/Input';
+import { Textarea } from '@/shared/ui/Textarea';
+import { ImagePicker } from '@/features/ImagePicker';
+import { ErrorBlock } from '@/shared/ui/ErrorBlock';
+import { EventType } from '@/entities/Event/model/types/event';
+import { Text } from '@/shared/ui/Text';
+import { fetchSelectableImages } from '../../api/fetchSelectableImages';
 import cls from './EventForm.module.scss';
-import {ImagePicker} from '@/features/ImagePicker';
 
 interface EventFormProps {
   className?: string;
-  inputData?: any;
-  onSubmit: () => void;
+  inputData?: EventType;
+  isPending?: boolean;
+  isError?: boolean;
+  errorMessage?: string;
+  onSubmit: (inputData: { [k: string]: FormDataEntryValue }) => void;
 }
 
 export const EventForm = memo((props: EventFormProps) => {
-  const {className, inputData, onSubmit} = props;
-
+  const {
+    className,
+    inputData,
+    onSubmit,
+    isPending = false,
+    isError = false,
+    errorMessage,
+  } = props;
   const [selectedImage, setSelectedImage] = useState(inputData?.image);
+
+  const {
+    data,
+    isPending: isImagesPending,
+    isError: isImagesError,
+  } = useQuery({
+    queryKey: ['events-images'],
+    queryFn: fetchSelectableImages,
+  });
 
   const handleSelectImage = (image: string) => {
     setSelectedImage(image);
@@ -29,14 +53,23 @@ export const EventForm = memo((props: EventFormProps) => {
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData);
 
-    //onSubmit({...data, image: selectedImage});
+    onSubmit({ ...data, image: selectedImage as string });
+    console.log(data);
   };
+
+  const controls = (
+    <Stack justify="end" gap="2">
+      <AppLink to="../">Cancel</AppLink>
+      <Button type="submit">Create</Button>
+    </Stack>
+  );
 
   return (
     <form
       className={classNames(cls['new-event-form'], {}, [className])}
       onSubmit={handleSubmit}
     >
+      {isPending && <Text>Submitting...</Text>}
       <Input
         label="Title"
         type="text"
@@ -45,11 +78,20 @@ export const EventForm = memo((props: EventFormProps) => {
         defaultValue={inputData?.title ?? ''}
       />
 
-      <ImagePicker
-        images={[]}
-        onSelect={handleSelectImage}
-        selectedImage={selectedImage}
-      />
+      {isImagesPending && <Text>Loading selectable images...</Text>}
+      {isImagesError && (
+        <ErrorBlock
+          message="Please try again"
+          title="Failed to load selectable images"
+        />
+      )}
+      {data && (
+        <ImagePicker
+          images={data}
+          onSelect={handleSelectImage}
+          selectedImage={selectedImage}
+        />
+      )}
 
       <Textarea
         label="Description"
@@ -83,10 +125,8 @@ export const EventForm = memo((props: EventFormProps) => {
         defaultValue={inputData?.location ?? ''}
       />
 
-      <Stack justify="end" gap="2">
-        <AppLink to="../">Cancel</AppLink>
-        <Button type="submit">Create</Button>
-      </Stack>
+      {!isPending && controls}
+      {isError && errorMessage && <ErrorBlock message={errorMessage} />}
     </form>
   );
 });

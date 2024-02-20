@@ -1,1 +1,2 @@
-export {EventItem} from './ui/EventItem/EventItem';
+export { EventList } from './ui/EventList/EventList';
+export type { EventType } from './model/types/event';

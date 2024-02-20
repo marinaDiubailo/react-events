@@ -1,21 +1,17 @@
-import {memo} from 'react';
-import {classNames} from '@/shared/lib/classNames/classNames';
+import { memo } from 'react';
+import { classNames } from '@/shared/lib/classNames/classNames';
+import { ImageType } from '../../model/types/image';
 import cls from './ImagePicker.module.scss';
-
-type ImageType = {
-  path: string;
-  caption: string;
-};
 
 interface ImagePickerProps {
   className?: string;
   images: ImageType[];
-  selectedImage: string;
+  selectedImage?: string;
   onSelect: (imagePath: string) => void;
 }
 
 export const ImagePicker = memo((props: ImagePickerProps) => {
-  const {className, images, selectedImage, onSelect} = props;
+  const { className, images, selectedImage, onSelect } = props;
 
   return (
     <div className={classNames(cls['image-picker'], {}, [className])}>
