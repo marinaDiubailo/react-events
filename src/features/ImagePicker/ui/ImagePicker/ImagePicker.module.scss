@@ -2,6 +2,8 @@
   ul {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    padding: 0.5rem 0;
     overflow-y: auto;
     gap: 0.5rem;
   }
@@ -10,7 +12,7 @@
     font-weight: bold;
     font-size: 0.85rem;
     margin-bottom: 0.25rem;
-    color: var(--text-shadowed);
+    color: var(--text-tertiary);
     text-transform: uppercase;
   }
 }
@@ -21,9 +23,14 @@
   border: 2px solid transparent;
   border-radius: 4px;
   overflow: hidden;
+  transition: var(--transition);
+
+  &:hover {
+    transform: scale(1.1);
+  }
 
   &.selected {
-    border-color: #e30d7c;
+    border-color: var(--accent-color);
   }
 
   img {

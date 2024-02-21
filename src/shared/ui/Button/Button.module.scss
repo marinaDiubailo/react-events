@@ -6,13 +6,13 @@
 }
 
 .primary {
-  background-color: #e30d7c;
-  color: #fff;
+  background-color: var(--accent-color);
+  color: var(--text-light);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.26);
 
   &:hover {
-    background-color: #e30d5b;
-    color: #fff;
+    background-color: var(--accent-color-hover);
+    color: var(--text-light);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   }
 }
@@ -22,7 +22,7 @@
   color: #3f0c26;
 
   &:hover {
-    color: #7c184c;
+    color: var(--accent-color-hover);
   }
 }
 
