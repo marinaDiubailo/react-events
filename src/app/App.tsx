@@ -1,9 +1,8 @@
 import { memo, Suspense } from 'react';
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { Loader } from '@/shared/ui/Loader/Loader';
+import { queryClient } from '@/shared/client/queryClient';
 import { AppRouter } from './providers/Router';
-
-const queryClient = new QueryClient();
 
 const App = memo(() => {
   return (

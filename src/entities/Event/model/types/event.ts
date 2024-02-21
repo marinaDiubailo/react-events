@@ -5,5 +5,5 @@ export type EventType = {
   date: string;
   time: string;
   location: string;
-  image?: string;
+  image: string;
 };

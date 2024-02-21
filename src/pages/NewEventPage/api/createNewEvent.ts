@@ -6,18 +6,14 @@ type ResponseType = {
   event: EventType;
 };
 
-export async function createNewEvent(event: {
-  [k: string]: FormDataEntryValue;
-}) {
-  try {
-    const { data } = await $api.post<ResponseType>(getRouteEvents(), {
-      method: 'POST',
-      body: JSON.stringify(event),
-      headers: {
-        'content-еype': 'application/json',
-      },
-    });
+type RequestType = {
+  event: Omit<EventType, 'id'>;
+};
 
+export async function createNewEvent(eventData: RequestType) {
+  try {
+    const { data } = await $api.post<ResponseType>(getRouteEvents(), eventData);
+    console.log(eventData);
     return data.event;
   } catch (error) {
     if (error instanceof Error) {

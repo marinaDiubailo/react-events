@@ -20,7 +20,7 @@ interface EventFormProps {
   isPending?: boolean;
   isError?: boolean;
   errorMessage?: string;
-  onSubmit: (inputData: { [k: string]: FormDataEntryValue }) => void;
+  onSubmit: (formData: Omit<EventType, 'id'>) => void;
 }
 
 export const EventForm = memo((props: EventFormProps) => {
@@ -43,8 +43,8 @@ export const EventForm = memo((props: EventFormProps) => {
     queryFn: fetchSelectableImages,
   });
 
-  const handleSelectImage = (image: string) => {
-    setSelectedImage(image);
+  const handleSelectImage = (imagePath: string) => {
+    setSelectedImage(imagePath);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -53,8 +53,7 @@ export const EventForm = memo((props: EventFormProps) => {
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData);
 
-    onSubmit({ ...data, image: selectedImage as string });
-    console.log(data);
+    onSubmit({ ...data, image: selectedImage } as Omit<EventType, 'id'>);
   };
 
   const controls = (
